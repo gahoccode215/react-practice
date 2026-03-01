@@ -1,21 +1,34 @@
+import { loginAPI, registerAPI } from '@/services/api';
 import type { FormProps } from 'antd';
-import { Button, Checkbox, Divider, Form, Input } from 'antd';
+import { App, Button, Checkbox, Divider, Form, Input } from 'antd';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 type FieldType = {
-    fullname?: string;
-    password?: string;
-    email?: string;
-    phone?: string;
+    fullName: string;
+    password: string;
+    email: string;
+    phone: string;
 };
 
 const RegisterPage = () => {
 
     const [isSubmit, setIsSubmit] = useState(false);
+    const { message } = App.useApp();
+    const navigate = useNavigate();
+    const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+        setIsSubmit(true);
+        const { email, fullName, password, phone } = values;
+        console.log(values)
+        const res = await registerAPI(fullName, email, password, phone)
+        if (res.data) {
+            message.success("Đăng ký thành công")
+            navigate("/login")
+        } else {
+            message.error(res.message)
+        }
 
-    const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-        console.log('Success:', values);
+        setIsSubmit(false)
     };
 
     return (
@@ -34,7 +47,7 @@ const RegisterPage = () => {
                         <Form.Item<FieldType>
                             labelCol={{ span: 24 }}
                             label="Họ và tên"
-                            name="fullname"
+                            name="fullName"
                             rules={[{ required: true, message: 'Vui lòng nhập họ và tên!' }]}
                         >
                             <Input />
