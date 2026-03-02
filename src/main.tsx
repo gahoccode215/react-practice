@@ -13,6 +13,7 @@ import 'styles/global.scss'
 import HomePage from 'pages/client/home';
 import { App } from 'antd';
 import { AppProvider } from 'components/context/app.context';
+import ProtectedRoute from './components/auth';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,14 @@ const router = createBrowserRouter([
     path: "/register",
     element: <RegisterPage />,
   },
+  {
+    path: "/checkout",
+    element: (
+      <ProtectedRoute>
+        <div>Checkout page</div>
+      </ProtectedRoute>
+    )
+  }
 ]);
 
 
