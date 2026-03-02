@@ -70,7 +70,7 @@ const LoginPage = () => {
 
                     <Form.Item label={null}>
                         <Button type="primary" htmlType="submit" loading={isSubmit}>
-                            Đăng ký
+                            Đăng nhập
                         </Button>
                     </Form.Item>
                     <Divider>Hoặc</Divider>
