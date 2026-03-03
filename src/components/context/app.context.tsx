@@ -4,7 +4,7 @@ interface CurrentUserContextType {
     isAuthenticated: boolean;
     user: IUser | null;
     setIsAuthenticated: (v: boolean) => void;
-    setUser: (v: IUser) => void;
+    setUser: (v: IUser | null) => void;
     isAppLoading: boolean;
     setIsAppLoading: (v: boolean) => void;
 }
