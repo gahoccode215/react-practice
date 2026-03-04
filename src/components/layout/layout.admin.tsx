@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     AppstoreOutlined,
     ExceptionOutlined,
@@ -14,7 +14,7 @@ import { Outlet } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { useCurrentApp } from '../context/app.context';
 import type { MenuProps } from 'antd';
-import { logoutAPI } from '@/services/api';
+import { fetchAccountAPI, logoutAPI } from '@/services/api';
 type MenuItem = Required<MenuProps>['items'][number];
 
 const { Content, Footer, Sider } = Layout;
@@ -25,6 +25,16 @@ const LayoutAdmin = () => {
     const [activeMenu, setActiveMenu] = useState('dashboard');
     const { user, setUser, setIsAuthenticated, isAuthenticated } = useCurrentApp();
 
+    useEffect(() => {
+        const fetchAccount = async () => {
+            const res = await fetchAccountAPI();
+            if (res.data) {
+                setUser(user)
+                setIsAuthenticated(true)
+            }
+        }
+        fetchAccount()
+    }, [])
 
     const handleLogout = async () => {
         const res = await logoutAPI();

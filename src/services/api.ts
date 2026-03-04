@@ -12,11 +12,7 @@ export const registerAPI = (fullName: string, email: string, password: string, p
 
 export const fetchAccountAPI = () => {
     const urlBackend = "/api/v1/auth/account"
-    return axios.get<IBackendRes<IFetchAccount>>(urlBackend, {
-        headers: {
-            delay: 3000
-        }
-    })
+    return axios.get<IBackendRes<IFetchAccount>>(urlBackend)
 }
 
 export const logoutAPI = () => {
@@ -24,7 +20,7 @@ export const logoutAPI = () => {
     return axios.post<IBackendRes<IRegister>>(urlBackend);
 }
 
-export const getUsersAPI = (current: number, pageSize: number) => {
-    const urlBackend = `/api/v1/user?current=${current}&pageSize=${pageSize}`;
+export const getUsersAPI = (query: string) => {
+    const urlBackend = `/api/v1/user?${query}`;
     return axios.get<IBackendRes<IModelPaginate<IUserTable>>>(urlBackend);
 }

@@ -153,7 +153,7 @@ const AppHeader = (props: any) => {
                 <p>Quản lý tài khoản</p>
                 <Divider />
 
-                <p>Đăng xuất</p>
+                <p onClick={() => handleLogout()}>Đăng xuất</p>
                 <Divider />
             </Drawer>
 
