@@ -7,6 +7,7 @@ import { ProTable, TableDropdown } from '@ant-design/pro-components';
 import { Button, Space, Tag } from 'antd';
 import { useRef, useState } from 'react';
 import { DetailUser } from '@/components/admin/user/detail.user';
+import { CreateUser } from './create.user';
 
 type TSearch = {
     fullName: string;
@@ -92,6 +93,12 @@ const TableUser = () => {
         }
     ];
 
+    const [openModalCreate, setOpenModalCreate] = useState<boolean>(false);
+
+    const refreshTable = () => {
+        actionRef.current?.reload()
+    }
+
     return (
         <>
 
@@ -115,6 +122,9 @@ const TableUser = () => {
                             query += `&createdAt>=${createDateRange[0]}&createdAt<=${createDateRange[1]}`
                         }
                     }
+
+                    query += `&sort=-createdAt`;
+
                     if (sort && sort.createdAt) {
                         query += `&sort=${sort.createdAt === "ascend" ? "createdAt" : "-createdAt"}`;
                     }
@@ -152,7 +162,7 @@ const TableUser = () => {
                         key="button"
                         icon={<PlusOutlined />}
                         onClick={() => {
-                            actionRef.current?.reload();
+                            setOpenModalCreate(true);
                         }}
                         type="primary"
                     >
@@ -166,6 +176,11 @@ const TableUser = () => {
                 setOpenViewDetail={setOpenViewDetail}
                 dataViewDetail={dataViewDetail}
                 setDataViewDetail={setDataViewDetail}
+            />
+            <CreateUser
+                openModalCreate={openModalCreate}
+                setOpenModalCreate={setOpenModalCreate}
+                refreshTable={refreshTable}
             />
         </>
     );
